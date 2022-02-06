@@ -1,0 +1,401 @@
+Homework 6
+Task 1
+
+class Rectangle {
+    constructor(length,width){
+        this.length = length;
+        this.width = width;
+    }
+    
+    get length(){
+        return this._length;
+    }
+        
+    set length(value){
+        this._length = value;
+    }
+        
+    get width(){
+        return this._width;
+    }
+        
+    set width(value){
+        this._width = value;
+    }
+        
+    getArea(){
+        return this._length * this._width;
+    }
+        
+    getPerimeter(){
+        return 2 * (this._length + this._width);
+    }
+
+    toString(){
+        return JSON.stringify(this);
+    }
+}
+
+Task 2
+
+class Employee {
+    constructor(id, firstName, lastName, position, salary, workingHours){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.salary = salary;
+        this.workingHours = workingHours;
+    }
+    
+    get id(){
+        return this._id;
+    }
+    
+    set id(value){
+        this._id = value;
+    }
+
+    get firstName(){
+        return this._firstName;
+    }
+    
+    set firstName(value){
+        this._firstName = value;
+    }
+
+    get lastName(){
+        return this._lastName;
+    }
+
+    set lastName(value){
+        this._lastName = value;
+    }
+
+    get position(){
+        return this._position;
+    }
+    
+    set position(value){
+        this._position = value;
+    }
+
+    get salary(){
+        return this._salary;
+    }
+    
+    set salary(value){
+        this._salary = value;
+    }
+
+    get workingHours(){
+        return this._workingHours;
+    }
+    
+    set workingHours(value){
+        this._workingHours = value;
+    }
+    
+    getFullName(){
+        return this._firstName + " " + this._lastName;
+    }
+    
+    getAnnularSalary(){
+        return this._salary * 12;
+    }
+        
+    raiseSalary(percent){
+        this._salary += percent / 100 * this._salary;
+        return this._salary;
+    }
+}
+
+Task 3
+
+class Author {
+    constructor(name, email, gender){
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+    }
+    
+    get name(){
+        return this._name;
+    }
+
+    set name(value){
+        this._name = value;
+    }
+
+    get email(){
+        return this._email;
+    }
+
+    set email(value){
+        this._email = value;
+    }
+
+    get gender(){
+        return this._gender;
+    }
+
+    set gender(value){
+        this._gender = value;
+    }
+
+    toString(){
+        return JSON.stringify(this);
+    }
+}
+
+let author = new Author("Paulo Coelho","paulo@brasil.com", "male");
+
+class Book {
+     constructor(title, author, price, quantity){
+        this.title = title;
+        this._author = author;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    get title(){
+        return this._title;
+    }
+
+    set title(value){
+        this._title = value;
+    }
+    
+    get author(){
+        return this._author;
+    }
+    
+    get price(){
+        return this._price;
+    }
+
+    set price(value){
+        this._price = value;
+    }
+
+    get quantity(){
+        return this.quantity;
+    }
+
+    set quantity(value){
+        this._quantity = value;
+    }
+
+    getProfit(){
+        return this._price * this._quantity;
+    }
+    
+    toString(){
+        return JSON.stringify(this);
+    } 
+}
+
+let book = new Book("Alchemist",author,1000, 50);
+
+Task - 4
+
+class Account {
+    _id = 73128;
+
+    static identifyAccounts(accountFirst,accountSecond){
+        return accountFirst._name === accountSecond._name && accountFirst._id === accountSecond._id && accountFirst.balance === accountSecond.balance;
+    }
+
+    constructor(name, balance){
+        this.name = name;
+        this.balance = balance;
+    }
+    
+    get id(){
+        return this._id;
+    }
+    
+    get name(){
+        return this._name;
+    }
+        
+    set name(value){
+        this._name = value;
+    }
+
+    get balance(){
+        return this._balance;
+    }
+        
+    set balance(value){
+        this._balance = value;
+    }
+
+    credit(amount){
+         this._balance += amount;
+         return this._balance;
+    }
+    
+    debit(amount){
+        if( this._balance >= amount) {
+            this._balance -= amount;
+            return this._balance;
+        } else alert( "Amount exceeded balance"); 
+    }
+    
+    transferTo(anotherAccount, amount){
+        if( this._balance >= amount){
+            this._balance -= amount;
+            anotherAccount._balance += amount;
+           return this._balance;
+        } else alert( "Amount exceeded balance"); 
+    }
+
+    toString(){
+        return JSON.stringify(this);
+    } 
+}
+
+let account1 = new Account("John",100000);
+let account2 = new Account("Bill",500000);
+let account3 = new Account("John",100000);
+Account.identifyAccounts(account1,account2);
+Account.identifyAccounts(account1,account3);
+
+Task 5
+
+class Person {
+    constructor(firstName, lastName, gender, age){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+    }
+    
+    get firstName(){
+        return this._firstName;
+    }
+
+    set firstName(value){
+        this._firstName = value;
+    }
+
+    get lastName(){
+        return this._lastName;
+    }
+
+    set lastName(value){
+        this._lastName = value;
+    }
+    get gender(){
+        return this._gender;
+    }
+
+    set gender(value){
+        this._gender = value;
+    }
+    get age(){
+        return this._age;
+    }
+
+    set age(value){
+        this._age = value;
+    }
+
+    toString(){
+        return JSON.stringify(this);
+    }
+}
+
+class Student extends Person {
+      grade = 0;
+        
+      _exams = {};
+    
+    constructor(programs, year, fee){
+        super();
+        this.programs = programs;
+        this.year = year;
+        this.fee = fee;
+        for(let elem of programs){
+            this.exams[elem] = "not passed";
+        } 
+    }
+
+    get programs(){
+        return this._programs;
+    }
+    
+    set programs(value){
+        if(!Array.isArray(value)){
+            alert("enter array of strings for programs");
+            return;
+        }
+        this._programs = value;
+    }
+
+    get year(){
+        return this._year;
+    }
+    
+    set year(value){
+        this._year = value;
+    }
+
+    get fee(){
+        return this._fee;
+    }
+    
+    set fee(value){
+        this._fee = value;
+    }
+
+    get exams(){
+        return this._exams;
+    }
+
+    passExam(program, grade){
+        this.exams[program] = "passed";
+        this.grade += grade;
+        if(this.grade >= 50) {
+           this.year++;
+           this.grade = 0;
+        }
+    }
+    
+    toString(){
+        return JSON.stringify(this);
+    }
+}
+
+class Teacher extends Person {
+    constructor(program, pay) {
+        super();
+        this.program = program;
+        this.pay = pay;
+    }
+        
+    get program(){
+        return this._program;
+    }
+
+    set program(value){
+        if(typeof value !== "string"){
+            alert("enter string for program");
+            return;
+        }
+        this._program = value;
+    }
+
+    get pay(){
+        return this._pay;
+    }
+
+    set pay(value){
+        this._pay = value;
+    }
+
+    toString(){
+        return JSON.stringify(this);
+    }
+}
