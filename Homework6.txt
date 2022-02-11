@@ -368,13 +368,10 @@ class Student extends Person {
         this._grade = value;
     }
 
-    #examList(programs,count = 0){
+    #examList(programs){
         for(let i = 0; i < programs.length; i++){
-            
-            if(!this.exams.hasOwnProperty(programs[i])){
                 this.exams[programs[i]] = "not passed";
-            } else this.exams[`${programs[i]} ${++count}`] = "not passed";
-        }
+            } 
     }
 
     passExam(program, grade){
@@ -382,20 +379,24 @@ class Student extends Person {
             alert("name of the program must have a string type");
             return;
         }
+        
         if(!this.exams.hasOwnProperty(program)){
             alert("This exam is not in program list");
             return;
         }
-        if(this.programs.every(elem => this.exams[elem] === "passed")){
-            alert(`${this.firstName} ${this.lastName} has passed all the exams according to his last year program list and has not got this year program list yet"`);
+
+        if(this.exams[program] === "passed"){
+            alert(`${program} is already passed for this year`);
             return;
         }
+ 
         if(grade >= 50 ) {
             this.exams[program] = "passed";
         } else {
             alert("the grade is under 50.Try again!");
             return;
         }
+        
         if(this.programs.every(elem => this.exams[elem] === "passed")){
             this.year++;
         }
