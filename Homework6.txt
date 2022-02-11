@@ -272,7 +272,7 @@ Account.identifyAccounts(account1,account2);
 Task 5
 
 class Person {
-    constructor(firstName, lastName, gender, age){
+    constructor({firstName, lastName, gender, age} = {}){
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -315,16 +315,16 @@ class Person {
 }
 
 class Student extends Person {
-      _grade = 0;
 
       _exams = {};
+
+      _programs = [];
     
-    constructor(programs, year, fee){
-        super();
+    constructor({programs, year, fee,...rest} = {}){
+        super(rest);
         this.programs = programs;
         this.year = year;
         this.fee = fee;
-        this.#examList(programs); 
     }
 
     get programs(){
@@ -336,7 +336,7 @@ class Student extends Person {
             alert("enter array of strings for programs");
             return;
         }
-        this._programs = value;
+        this._programs = this._programs.concat(value);
         this.#examList(value);
     }
 
@@ -368,9 +368,12 @@ class Student extends Person {
         this._grade = value;
     }
 
-    #examList(programs){
+    #examList(programs,count = 0){
         for(let i = 0; i < programs.length; i++){
-            this.exams[programs[i]] = "not passed";
+            
+            if(!this.exams.hasOwnProperty(programs[i])){
+                this.exams[programs[i]] = "not passed";
+            } else this.exams[`${programs[i]} ${++count}`] = "not passed";
         }
     }
 
@@ -379,18 +382,22 @@ class Student extends Person {
             alert("name of the program must have a string type");
             return;
         }
-        if( this.exams[program] === "passed"){
-            alert("this exam is already passed");
+        if(!this.exams.hasOwnProperty(program)){
+            alert("This exam is not in program list");
             return;
         }
-        this.exams[program] = "passed";
-        if(this.programs.includes(program)){
-            this.programs.splice(this.programs.indexOf(program),1);
+        if(this.programs.every(elem => this.exams[elem] === "passed")){
+            alert(`${this.firstName} ${this.lastName} has passed all the exams according to his last year program list and has not got this year program list yet"`);
+            return;
         }
-        this.grade += grade;
-        if(this.grade >= 50 && this.programs.length === 0) {
-           this.year++;
-           this.grade = 0;
+        if(grade >= 50 ) {
+            this.exams[program] = "passed";
+        } else {
+            alert("the grade is under 50.Try again!");
+            return;
+        }
+        if(this.programs.every(elem => this.exams[elem] === "passed")){
+            this.year++;
         }
     }
     
@@ -399,9 +406,11 @@ class Student extends Person {
     }
 }
 
+let stud = new Student({programs:["Math", "English", "Philosophy"], year:1,fee:500,lastName:"Travolta",firstName:"Jon",age:35,gender:"male"})
+
 class Teacher extends Person {
-    constructor(program, pay) {
-        super();
+    constructor({program, pay,...person} = {}) {
+        super(person);
         this.program = program;
         this.pay = pay;
     }
@@ -430,3 +439,5 @@ class Teacher extends Person {
         return JSON.stringify(this);
     }
 }
+
+let teacher = new Teacher({firstName:"Anahit", lastName:"Grigoryan", age:57, gender:"female", program:"English", pay:800})
